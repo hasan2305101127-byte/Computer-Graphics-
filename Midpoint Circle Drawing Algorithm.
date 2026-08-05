@@ -1,1 +1,71 @@
-
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <stdio.h>
+int r;
+int xc = 0, yc = r ;//Two point of Center of circle xc, yc
+//8 point bosanor function
+void drawcircle(int x, int y){
+ glBegin(GL_POINTS) ;//Pixel drawing start
+//1st coordinate
+glVertex2i(x + xc, y + yc) ;//1st coordinate, 1st part
+glVertex2i(y + xc, x + yc) ;//1st coordinate, 2nd part
+//2nd coordinate
+glVertex2i(-x + xc, y + yc) ;//2nd coordinate, 1st part
+glVertex2i(-y + xc, x + yc) ;//2nd coordinate, 2nd part
+//3rd coordinate
+glVertex2i(-x + xc, -y + yc) ;//3rd coordinate, 1st part
+glVertex2i(-y + xc, -x + yc) ;//3rd coordinate, 2nd part
+//4th coordinate
+glVertex2i(x + xc, -y + yc) ;//4th coordinate, 1st part
+glVertex2i(y + xc, -x + yc) ;//4th coordinate, 2nd part
+glEnd() ;//Pixel drawing ses
+}
+//Midpoint Circle draw korar function
+void midpointCircle(){
+int x = 0 ;
+int y = r ;
+int p = 1 - r ;
+drawcircle(x, y) ;
+while(x<=y){
+ x++;
+if(p < 0){
+ p = p + 2 * x + 1 ;
+}
+else{
+ y--;
+ p = p + 2 * (x - y) + 1 ;
+}
+drawcircle(x, y);
+}
+}
+void init()
+{
+glClearColor(0,0,0,0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+glOrtho(-100,100,-100,100,-1,1);
+}
+void display()
+{
+glClear(GL_COLOR_BUFFER_BIT);
+midpointCircle() ;
+glColor3f(1,1,1);
+glBegin(GL_POINTS) ;
+glEnd();
+glFlush();
+}
+int main(int argc,char** argv)
+{
+ //Center r point gulo input nibo
+ scanf("%d %d", &xc, &yc) ;
+ printf("Enter Radius : ");
+ scanf("%d",&r);
+glutInit(&argc,argv);
+ glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+ glutInitWindowSize(600,600);
+ glutCreateWindow("Midpoint Circle");
+ init();
+ glutDisplayFunc(display);
+ glutMainLoop();
+ return 0;
+}
