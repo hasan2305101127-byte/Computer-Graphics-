@@ -1,0 +1,48 @@
+#include <GL/gl.h>
+#include <GL/glut.h>
+void display(void)
+{
+ /* Clear the screen */
+ glClear(GL_COLOR_BUFFER_BIT);
+ /* Set drawing color (pink/magenta) */
+ glColor3f(1.0f, 0.25f, 1.0f);
+ /* Draw rectangle */
+ glBegin(GL_POLYGON);
+ glVertex3f(0.2f, 0.2f, 0.0f);
+ glVertex3f(0.4f, 0.2f, 0.0f);
+ glVertex3f(0.4f, 0.5f, 0.0f);
+ glVertex3f(0.2f, 0.5f, 0.0f);
+ glEnd();
+ /* Swap buffers */
+ glutSwapBuffers();
+}
+void init(void)
+{
+ /* Set background color to black (R,G,B,A) */
+ glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+ /* Configure projection area */
+ glMatrixMode(GL_PROJECTION);
+ glLoadIdentity();
+ /* Coordinate system from 0 to 1 */
+ glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+}
+int main(int argc, char **argv)
+{
+ /* Initialize GLUT */
+ glutInit(&argc, argv);
+/* Use double buffering and RGB color mode */
+ glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+ /* Window size */
+ glutInitWindowSize(500, 500);
+ /* Window position */
+ glutInitWindowPosition(100, 100);
+ /* Create window */
+ glutCreateWindow("hello");
+ /* Initialize OpenGL settings */
+ init();
+ /* Register display callback */
+ glutDisplayFunc(display) ;
+/* Enter event-processing loop */
+ glutMainLoop();
+ return 0;
+}
